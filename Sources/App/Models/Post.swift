@@ -15,4 +15,5 @@ final class Post: Codable
 extension Post: PostgreSQLModel {}
 extension Post: Migration {}
 extension Post: Content {}
+extension Post: Parameter {}
 
