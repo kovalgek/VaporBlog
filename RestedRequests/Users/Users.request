@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>baseURL</key>
-	<string>http://localhost:8080/api/posts</string>
+	<string>http://localhost:8080/api/users</string>
 	<key>followRedirect</key>
 	<true/>
 	<key>handleJSONPCallbacks</key>
@@ -11,24 +11,15 @@
 	<key>headers</key>
 	<array/>
 	<key>httpMethod</key>
-	<string>POST</string>
+	<string>GET</string>
 	<key>jsonpScript</key>
 	<string></string>
 	<key>paramBodyUIChoice</key>
 	<integer>0</integer>
 	<key>parameters</key>
-	<array>
-		<dict>
-			<key>inUse</key>
-			<true/>
-			<key>parameter</key>
-			<string>body</string>
-			<key>value</key>
-			<string>hello all</string>
-		</dict>
-	</array>
+	<array/>
 	<key>parametersType</key>
-	<integer>1</integer>
+	<integer>0</integer>
 	<key>presentBeforeChallenge</key>
 	<false/>
 	<key>stringEncoding</key>

@@ -1,0 +1,33 @@
+How to make a blog on swift.
+
+1. Introduction
+
+for whom this article?
+	ios developer, swift, own backend, don't learn new language and relax with swifty swift
+
+Why swift?
+	I tried python and flask.
+
+Why Vapor?
+	Not so many choise and I tried Kitura, tried Vapor
+
+Bascially this article is a combination of two books and my expirience. And if you are busy (and you are busy) this is for your my dear reader.
+
+
+2. Main part
+
+Blog scheme
+Features list
+
+2.1
+Create models
+Create relations
+Create controllers
+Implement features
+
+
+3. Result
+What can be done
+How
+Client
+Result is here

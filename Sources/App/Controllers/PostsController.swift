@@ -12,6 +12,7 @@ struct PostsController: RouteCollection {
         postsRoutes.put(Post.parameter, use: updateHandler)
         postsRoutes.delete(Post.parameter, use: deleteHandler)
         postsRoutes.get("search", use: searchHandler)
+        postsRoutes.get(Post.parameter, "user", use: getUserHandler)
     }
     
     func createHandler(_ req: Request) throws -> Future<Post> {
@@ -40,6 +41,7 @@ struct PostsController: RouteCollection {
 
         return flatMap(to: Post.self, futureWithSavedPost, futureWithDecodedPost) { post, updatedPost in
             post.body = updatedPost.body
+            post.userID = updatedPost.userID
             return post.save(on: req)
         }
     }
@@ -57,5 +59,16 @@ struct PostsController: RouteCollection {
         }
         
         return Post.query(on: req).filter(\.body == searchTerm).all()
+    }
+    
+    // example: api/posts/3/user
+    // returns user for post
+    func getUserHandler(_ req: Request) throws -> Future<User> {
+        
+        let futureWithSavedPost = try req.parameters.next(Post.self)
+
+        return futureWithSavedPost.flatMap(to: User.self) { post in
+            post.user.get(on: req)
+        }
     }
 }
