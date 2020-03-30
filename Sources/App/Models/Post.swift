@@ -22,6 +22,10 @@ extension Post {
     var user: Parent<Post, User> {
         return parent(\.userID)
     }
+    
+    var categories: Siblings<Post, Category, PostCategoryPivot> {
+        return siblings()
+    }
 }
 
 extension Post: Migration {

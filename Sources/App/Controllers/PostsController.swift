@@ -13,6 +13,10 @@ struct PostsController: RouteCollection {
         postsRoutes.delete(Post.parameter, use: deleteHandler)
         postsRoutes.get("search", use: searchHandler)
         postsRoutes.get(Post.parameter, "user", use: getUserHandler)
+        
+        postsRoutes.post(Post.parameter, "categories", Category.parameter, use: addCategoriesHandler)
+        postsRoutes.get(Post.parameter, "categories", use: getCategoriesHandler)
+        postsRoutes.delete(Post.parameter, "categories", Category.parameter, use: removeCategoriesHandler)
     }
     
     func createHandler(_ req: Request) throws -> Future<Post> {
@@ -69,6 +73,42 @@ struct PostsController: RouteCollection {
 
         return futureWithSavedPost.flatMap(to: User.self) { post in
             post.user.get(on: req)
+        }
+    }
+    
+    // example: /posts/postID/categories/categoryID
+    func addCategoriesHandler(_ req: Request) throws -> Future<HTTPStatus> {
+       
+        return try flatMap(
+            to: HTTPStatus.self,
+            req.parameters.next(Post.self),
+            req.parameters.next(Category.self))
+        { post, category in
+           
+            return post.categories.attach(category, on: req).transform(to: .created)
+        }
+    }
+    
+    func getCategoriesHandler(_ req: Request) throws -> Future<[Category]> {
+        
+        return try req.parameters.next(Post.self)
+            .flatMap(to: [Category].self) { post in
+        
+                try post.categories.query(on: req).all()
+        }
+    }
+    
+    func removeCategoriesHandler(_ req: Request) throws -> Future<HTTPStatus> {
+        
+        return try flatMap(
+            to: HTTPStatus.self,
+            req.parameters.next(Post.self),
+            req.parameters.next(Category.self)
+        ) { post, category in
+        
+            return post.categories
+                .detach(category, on: req)
+                .transform(to: .noContent)
         }
     }
 }

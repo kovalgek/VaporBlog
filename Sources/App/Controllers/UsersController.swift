@@ -8,7 +8,7 @@ struct UsersController: RouteCollection {
         usersRoute.post(User.self, use: createHandler)
         usersRoute.get(use: getAllHandler)
         usersRoute.get(User.parameter, use: getHandler)
-        usersRoute.get(User.parameter, "posts", use: getAcronymsHandler)
+        usersRoute.get(User.parameter, "posts", use: getPostsHandler)
     }
     
     func createHandler(_ req: Request, user: User) throws -> Future<User> {
@@ -25,7 +25,7 @@ struct UsersController: RouteCollection {
     
     // example: api/users/0B70F662-3995-4388-8655-5A5659582C22/posts
     // returns posts for user
-    func getAcronymsHandler(_ req: Request) throws -> Future<[Post]> {
+    func getPostsHandler(_ req: Request) throws -> Future<[Post]> {
         
         let futureWithSavedUser = try req.parameters.next(User.self)
         
